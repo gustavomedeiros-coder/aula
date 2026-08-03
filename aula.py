@@ -63,7 +63,7 @@ with st.expander("ℹ️ Sobre o IBCR-PE"):
         choques econômicos ao longo do tempo.
 
         Este dashboard apresenta a evolução histórica, distribuição dos
-        valores, padrões sazonais e médias anuais do indicador.
+        valores e médias anuais do indicador.
         """
     )
 
