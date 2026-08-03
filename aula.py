@@ -152,10 +152,6 @@ fig.tight_layout()
 
 st.pyplot(fig)
 
-#-----------------------------------------
-# Gráfico 3 - boxplot
-#-----------------------------------------
-
 # -------------------------------------
 # Gráfico 3 - Diagrama de caixa com média
 # -------------------------------------
@@ -204,10 +200,6 @@ fig.tight_layout()
 
 # Exibir no Streamlit
 st.pyplot(fig)
-
-#----------------------------
-#gráfico 4 - heatmap
-#----------------------------
 
 # -------------------------------------
 # Gráfico 4 - Mapa de calor temporal
@@ -298,4 +290,66 @@ fig.tight_layout()
 
 
 # Mostrar no Streamlit
+st.pyplot(fig)
+
+# -------------------------------------
+# Gráfico 5 - Valor médio por ano
+# -------------------------------------
+
+st.subheader("Valor médio do IBCR-PE por ano")
+
+
+# Calcular média anual
+media_ano = df.groupby(
+    df["data"].dt.year
+)["valor"].mean()
+
+
+# Criar gráfico
+fig, ax = plt.subplots(
+    figsize=(10, 6)
+)
+
+
+# Gráfico de barras horizontal
+ax.barh(
+    media_ano.index.astype(str),
+    media_ano.values,
+    edgecolor="black"
+)
+
+
+# Título
+ax.set_title(
+    "Valor médio por Ano",
+    fontsize=16,
+    fontweight="bold"
+)
+
+
+# Eixos
+ax.set_xlabel(
+    "Valor médio",
+    fontsize=12
+)
+
+ax.set_ylabel(
+    "Ano",
+    fontsize=12
+)
+
+
+# Grade
+ax.grid(
+    axis="x",
+    linestyle="--",
+    alpha=0.3
+)
+
+
+# Ajuste
+fig.tight_layout()
+
+
+# Exibir no Streamlit
 st.pyplot(fig)
