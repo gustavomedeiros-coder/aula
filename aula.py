@@ -358,13 +358,6 @@ with aba1:
 
     st.pyplot(fig)
 
-st.caption(
-    """
-    A média móvel de 12 meses reduz oscilações de curto prazo
-    e evidencia a tendência da atividade econômica.
-    A área destacada representa o período da pandemia.
-    """
-)
 
 # ======================================
 # ABA 2 - DISTRIBUIÇÃO
@@ -549,13 +542,6 @@ with aba3:
 
     st.pyplot(fig)
 
-st.caption(
-    """
-    O mapa de calor permite identificar padrões de comportamento
-    ao longo dos meses e anos, destacando períodos de maior ou
-    menor atividade econômica.
-    """
-)
 
 # ======================================
 # ABA 4 - ANÁLISE ANUAL
