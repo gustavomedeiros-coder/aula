@@ -343,15 +343,16 @@ with aba3:
     )
 
 
-    fig, ax = plt.subplots(
+        fig, ax = plt.subplots(
         figsize=(12,6)
     )
-    
-imagem = ax.imshow(
-    heatmap_data,
-    aspect="auto",
-    cmap="viridis"
-)
+
+
+    imagem = ax.imshow(
+        heatmap_data,
+        aspect="auto",
+        interpolation="nearest"
+    )
 
     fig.colorbar(
         imagem,
