@@ -47,6 +47,25 @@ st.markdown(
     """
 )
 
+# ======================================
+# SOBRE O INDICADOR
+# ======================================
+
+with st.expander("ℹ️ Sobre o IBCR-PE"):
+
+    st.markdown(
+        """
+        O **IBCR-PE (Índice de Atividade Econômica Regional de Pernambuco)**
+        é um indicador mensal que acompanha o comportamento da atividade
+        econômica do estado.
+
+        Ele permite observar períodos de crescimento, desaceleração e
+        choques econômicos ao longo do tempo.
+
+        Este dashboard apresenta a evolução histórica, distribuição dos
+        valores, padrões sazonais e médias anuais do indicador.
+        """
+    )
 
 # ======================================
 # DADOS
