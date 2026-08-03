@@ -20,7 +20,11 @@ url = "https://api.bcb.gov.br/dados/serie/bcdata.sgs.25418/dados?formato=csv"
 
 @st.cache_data
 def carregar_dados():
-    df = pd.read_csv(url)
+    df = pd.read_csv(
+        url,
+        sep=";",
+        decimal=","
+    )
     return df
 
 
