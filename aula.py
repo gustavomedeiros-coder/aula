@@ -15,7 +15,7 @@ st.title("📊 Meu Dashboard")
 
 
 # Carregar dados
-url = ""
+url = "https://api.bcb.gov.br/dados/serie/bcdata.sgs.25418/dados?formato=csv"
 
 
 @st.cache_data
