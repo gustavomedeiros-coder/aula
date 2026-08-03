@@ -36,7 +36,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.title("📊 IBCR-PE — Indicador de Atividade Econômica")
+st.title("📊 IBCR-PE — Indicador de Atividade Econômica em Pernambuo (com ajuste sazonal)")
 
 st.markdown(
     """
