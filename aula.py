@@ -383,14 +383,5 @@ def plot_heatmap_temporal(df: pd.DataFrame):
     st.caption("Efeitos da pandemia aparecem no gráfico.")
 
 
-# Exemplo de uso dentro de um app Streamlit:
-if __name__ == "__main__":
-    st.title("Mapa de Calor Temporal")
-
-    uploaded_file = st.file_uploader("Envie seu arquivo CSV", type="csv")
-
-    if uploaded_file is not None:
-        df = pd.read_csv(uploaded_file, parse_dates=["data"])
-        plot_heatmap_temporal(df)
-    else:
-        st.info("Envie um arquivo CSV com as colunas 'data' e 'valor' para gerar o gráfico.")
+# No seu app, depois de carregar o df (do link da web), chame:
+# plot_heatmap_temporal(df)
