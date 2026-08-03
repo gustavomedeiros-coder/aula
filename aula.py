@@ -358,7 +358,13 @@ with aba1:
 
     st.pyplot(fig)
 
-
+st.caption(
+    """
+    A média móvel de 12 meses reduz oscilações de curto prazo
+    e evidencia a tendência da atividade econômica.
+    A área destacada representa o período da pandemia.
+    """
+)
 
 # ======================================
 # ABA 2 - DISTRIBUIÇÃO
