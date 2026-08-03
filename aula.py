@@ -157,7 +157,8 @@ col1, col2, col3, col4 = st.columns(4)
 with col1:
     st.metric(
         "Último IBCR-PE",
-        f"{ultimo_valor:.2f}"
+        f"{ultimo_valor:.2f}",
+        f"{variacao:.2f}%"
     )
 
 
