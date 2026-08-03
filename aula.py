@@ -325,12 +325,23 @@ with aba2:
 # ABA 3 - SAZONALIDADE
 # ======================================
 
-with aba3:
+import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
 
-    st.subheader(
-        "Mapa de calor temporal"
-    )
 
+def plot_heatmap_temporal(df: pd.DataFrame):
+    """
+    Plota um heatmap (mapa de calor) do valor médio por ano x mês.
+
+    Espera um DataFrame `df` com as colunas:
+        - "data": datetime
+        - "valor": numérico
+    """
+
+    df = df.copy()
+    df["ano"] = df["data"].dt.year
+    df["mes"] = df["data"].dt.month
 
     heatmap_data = pd.pivot_table(
         df,
@@ -340,125 +351,46 @@ with aba3:
         aggfunc="mean"
     )
 
+    fig, ax = plt.subplots(figsize=(12, 6))
 
-    fig, ax = plt.subplots(
-        figsize=(12,6)
-    )
-
-
-    # Heatmap com células perfeitamente encaixadas
-    imagem = ax.pcolormesh(
+    im = ax.imshow(
         heatmap_data,
-        shading="nearest"
+        aspect="auto"
     )
 
+    fig.colorbar(im, ax=ax, label="Valor médio")
 
-    # Barra de cores
-    fig.colorbar(
-        imagem,
-        ax=ax,
-        label="Valor médio"
-    )
-
-
-    # Meses
-    ax.set_xticks(
-        [i + 0.5 for i in range(12)]
-    )
-
+    ax.set_xticks(range(12))
     ax.set_xticklabels(
-        [
-            "Jan","Fev","Mar","Abr",
-            "Mai","Jun","Jul","Ago",
-            "Set","Out","Nov","Dez"
-        ]
+        ["Jan", "Fev", "Mar", "Abr",
+         "Mai", "Jun", "Jul", "Ago",
+         "Set", "Out", "Nov", "Dez"]
     )
 
+    ax.set_yticks(range(len(heatmap_data.index)))
+    ax.set_yticklabels(heatmap_data.index)
 
-    # Anos
-    ax.set_yticks(
-        [i + 0.5 for i in range(len(heatmap_data.index))]
-    )
-
-    ax.set_yticklabels(
-        heatmap_data.index
-    )
-
-
-    ax.set_xlabel(
-        "Mês"
-    )
-
-    ax.set_ylabel(
-        "Ano"
-    )
-
-
-    ax.set_title(
-        "Mapa de calor do IBCR-PE",
-        fontsize=16,
-        fontweight="bold"
-    )
-
+    ax.set_title("Mapa de calor temporal", fontsize=16, fontweight="bold")
+    ax.set_xlabel("Mês")
+    ax.set_ylabel("Ano")
 
     fig.tight_layout()
 
-
+    # No Streamlit, usamos st.pyplot() no lugar de plt.show()
     st.pyplot(fig)
 
-# ======================================
-# ABA 4 - ANÁLISE ANUAL
-# ======================================
-
-with aba4:
-
-    st.subheader(
-        "Média anual do IBCR-PE"
-    )
+    # Efeitos da pandemia aparecem no gráfico
+    st.caption("Efeitos da pandemia aparecem no gráfico.")
 
 
-    media_ano = df.groupby(
-        "ano"
-    )["valor"].mean()
+# Exemplo de uso dentro de um app Streamlit:
+if __name__ == "__main__":
+    st.title("Mapa de Calor Temporal")
 
+    uploaded_file = st.file_uploader("Envie seu arquivo CSV", type="csv")
 
-    fig, ax = plt.subplots(
-        figsize=(10,5)
-    )
-
-
-    ax.barh(
-        media_ano.index.astype(str),
-        media_ano.values,
-        edgecolor="black"
-    )
-
-
-    ax.set_title(
-        "Valor médio por ano",
-        fontsize=16,
-        fontweight="bold"
-    )
-
-
-    ax.set_xlabel(
-        "Valor médio"
-    )
-
-
-    ax.set_ylabel(
-        "Ano"
-    )
-
-
-    ax.grid(
-        axis="x",
-        linestyle="--",
-        alpha=0.3
-    )
-
-
-    fig.tight_layout()
-
-
-    st.pyplot(fig)
+    if uploaded_file is not None:
+        df = pd.read_csv(uploaded_file, parse_dates=["data"])
+        plot_heatmap_temporal(df)
+    else:
+        st.info("Envie um arquivo CSV com as colunas 'data' e 'valor' para gerar o gráfico.")
