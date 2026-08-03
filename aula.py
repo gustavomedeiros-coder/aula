@@ -223,7 +223,7 @@ aba1, aba2, aba3, aba4 = st.tabs(
     [
         "📈 Evolução temporal",
         "📊 Distribuição",
-        "🌡 Sazonalidade",
+        "🌡 Heatmap",
         "📅 Análise anual"
     ]
 )
