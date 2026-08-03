@@ -3,23 +3,37 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
+# ---------------------------------------
 # Configuração da página
+# ---------------------------------------
+
 st.set_page_config(
-    page_title="Meu Dashboard",
+    page_title="IBCR-PE | Dashboard Econômico",
+    page_icon="📊",
     layout="wide"
 )
 
 
+# ---------------------------------------
 # Título
-st.title("📊 Meu Dashboard")
+# ---------------------------------------
+
+st.title("📊 Dashboard IBCR-PE")
+st.caption(
+    "Índice de Atividade Econômica de Pernambuco"
+)
 
 
-# Carregar dados
+# ---------------------------------------
+# Carregamento dos dados
+# ---------------------------------------
+
 url = "https://api.bcb.gov.br/dados/serie/bcdata.sgs.25418/dados?formato=csv"
 
 
 @st.cache_data
 def carregar_dados():
+
     df = pd.read_csv(
         url,
         sep=";",
@@ -31,107 +45,87 @@ def carregar_dados():
         dayfirst=True
     )
 
+    df = df.sort_values(
+        "data"
+    )
+
     return df
 
 
 df = carregar_dados()
 
-st.write(df.columns)
 
-# Visualização inicial
-st.subheader("Dados")
-
-st.dataframe(df.head())
-
-#a partir daqui são gráficos
-#GRÁFICO 1
-# -------------------------------------
+# ---------------------------------------
 # Gráfico 1 - Série temporal com média móvel
-# -------------------------------------
+# ---------------------------------------
 
-st.subheader("Séries temporais com média móvel")
+st.subheader("Série temporal com média móvel")
 
 
-# Criar média móvel (12 períodos = meses)
 df["media_movel"] = df["valor"].rolling(
     window=12
 ).mean()
 
 
-# Criar gráfico
-fig, ax = plt.subplots(figsize=(12, 6))
+fig, ax = plt.subplots(
+    figsize=(12,6)
+)
 
 
-# Série original
 ax.plot(
     df["data"],
     df["valor"],
     linewidth=1.5,
     alpha=0.6,
-    label="Original"
+    label="IBCR-PE"
 )
 
 
-# Média móvel
 ax.plot(
     df["data"],
     df["media_movel"],
     linewidth=3,
-    label="Média Móvel (12)"
+    label="Média móvel (12 meses)"
 )
 
 
-# Título
-ax.set_title(
-    "Séries temporais com média móvel",
-    fontsize=16,
-    fontweight="bold"
-)
-
-
-# Eixos
 ax.set_xlabel(
-    "Data",
-    fontsize=12
+    "Data"
 )
 
 ax.set_ylabel(
-    "IBCR-PE",
-    fontsize=12
+    "Índice"
 )
 
 
-# Grade
 ax.grid(
     linestyle="--",
     alpha=0.3
 )
 
 
-# Legenda
 ax.legend()
 
 
-# Ajuste
 fig.tight_layout()
 
 
-# Exibir no Streamlit
 st.pyplot(fig)
 
-#GRÁFICO 2
-# -------------------------------------
+
+
+# ---------------------------------------
 # Gráfico 2 - Distribuição dos valores
-# -------------------------------------
+# ---------------------------------------
 
-st.subheader("Distribuição de Valores")
-
-
-# Criar gráfico
-fig, ax = plt.subplots(figsize=(10, 6))
+st.subheader("Distribuição dos valores")
 
 
-# Histograma
+fig, ax = plt.subplots(
+    figsize=(10,6)
+)
+
+
 ax.hist(
     df["valor"],
     bins=30,
@@ -139,15 +133,6 @@ ax.hist(
 )
 
 
-# Título
-ax.set_title(
-    "Distribuição de Valores",
-    fontsize=16,
-    fontweight="bold"
-)
-
-
-# Eixos
 ax.set_xlabel(
     "Valor"
 )
@@ -157,15 +142,12 @@ ax.set_ylabel(
 )
 
 
-# Grade
 ax.grid(
     alpha=0.3
 )
 
 
-# Ajuste
 fig.tight_layout()
 
 
-# Exibir no Streamlit
 st.pyplot(fig)
