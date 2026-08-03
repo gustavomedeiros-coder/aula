@@ -321,8 +321,6 @@ with aba2:
 
         st.pyplot(fig)
 
-
-
 # ======================================
 # ABA 3 - SAZONALIDADE
 # ======================================
@@ -348,11 +346,10 @@ with aba3:
     )
 
 
-    imagem = ax.imshow(
+    # Heatmap com células perfeitamente encaixadas
+    imagem = ax.pcolormesh(
         heatmap_data,
-        aspect="auto",
-        cmap="RdYlGn",
-        interpolation="nearest"
+        shading="nearest"
     )
 
 
@@ -366,7 +363,7 @@ with aba3:
 
     # Meses
     ax.set_xticks(
-        range(12)
+        [i + 0.5 for i in range(12)]
     )
 
     ax.set_xticklabels(
@@ -380,23 +377,11 @@ with aba3:
 
     # Anos
     ax.set_yticks(
-        range(len(heatmap_data.index))
+        [i + 0.5 for i in range(len(heatmap_data.index))]
     )
 
     ax.set_yticklabels(
         heatmap_data.index
-    )
-
-
-    # Limites para encaixar os quadrados
-    ax.set_xlim(
-        -0.5,
-        11.5
-    )
-
-    ax.set_ylim(
-        len(heatmap_data.index)-0.5,
-        -0.5
     )
 
 
@@ -420,7 +405,6 @@ with aba3:
 
 
     st.pyplot(fig)
-
 
 # ======================================
 # ABA 4 - ANÁLISE ANUAL
