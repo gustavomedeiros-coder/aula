@@ -212,6 +212,59 @@ with col4:
         f"{minimo:.2f}"
     )
 
+# ======================================
+# INSIGHTS AUTOMÁTICOS
+# ======================================
+
+st.subheader("📌 Principais informações")
+
+
+ano_maior = df.loc[
+    df["valor"].idxmax(),
+    "ano"
+]
+
+
+ano_menor = df.loc[
+    df["valor"].idxmin(),
+    "ano"
+]
+
+
+col_info1, col_info2, col_info3 = st.columns(3)
+
+
+with col_info1:
+
+    st.info(
+        f"""
+        📈 **Maior valor registrado**
+
+        {maximo:.2f} pontos em {ano_maior}.
+        """
+    )
+
+
+with col_info2:
+
+    st.warning(
+        f"""
+        📉 **Menor valor registrado**
+
+        {minimo:.2f} pontos em {ano_menor}.
+        """
+    )
+
+
+with col_info3:
+
+    st.success(
+        f"""
+        📊 **Média histórica**
+
+        {media_historica:.2f} pontos.
+        """
+    )
 
 st.divider()
 
