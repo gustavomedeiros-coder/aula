@@ -549,7 +549,13 @@ with aba3:
 
     st.pyplot(fig)
 
-
+st.caption(
+    """
+    O mapa de calor permite identificar padrões de comportamento
+    ao longo dos meses e anos, destacando períodos de maior ou
+    menor atividade econômica.
+    """
+)
 
 # ======================================
 # ABA 4 - ANÁLISE ANUAL
