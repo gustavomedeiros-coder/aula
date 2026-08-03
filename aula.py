@@ -163,26 +163,26 @@ with aba1:
     )
 
 
-    # Série original
     ax.plot(
         df["data"],
         df["valor"],
-        linewidth=1.5,
-        alpha=0.6,
+        color="#1f77b4",
+        linewidth=1.8,
+        alpha=0.7,
         label="IBCR-PE"
     )
 
 
-    # Média móvel
     ax.plot(
         df["data"],
         df["media_movel"],
+        color="#d62728",
         linewidth=3,
         label="Média móvel (12 meses)"
     )
 
 
-    # Destacar pandemia
+    # Destacar período da pandemia
     ax.axvspan(
         pd.Timestamp("2020-03-01"),
         pd.Timestamp("2021-12-01"),
@@ -193,29 +193,27 @@ with aba1:
 
 
     ax.set_title(
-        "IBCR-PE e média móvel de 12 meses",
+        "IBCR-PE e tendência de longo prazo",
         fontsize=16,
         fontweight="bold"
     )
 
 
     ax.set_xlabel(
-        "Data"
+        "Ano"
     )
-
 
     ax.set_ylabel(
         "Índice"
     )
 
 
+    ax.legend()
+
+
     ax.grid(
-        linestyle="--",
         alpha=0.3
     )
-
-
-    ax.legend()
 
 
     fig.tight_layout()
@@ -239,7 +237,8 @@ with aba2:
     col1, col2 = st.columns(2)
 
 
-    # Histograma
+    # HISTOGRAMA
+
     with col1:
 
         fig, ax = plt.subplots(
@@ -250,19 +249,18 @@ with aba2:
         ax.hist(
             df["valor"],
             bins=30,
+            color="#1f77b4",
             edgecolor="black"
         )
 
 
         ax.set_title(
-            "Distribuição dos valores",
-            fontsize=14,
-            fontweight="bold"
+            "Distribuição dos valores"
         )
 
 
         ax.set_xlabel(
-            "Valor"
+            "IBCR-PE"
         )
 
 
@@ -283,7 +281,8 @@ with aba2:
 
 
 
-    # Boxplot
+    # BOXPLOT
+
     with col2:
 
         fig, ax = plt.subplots(
@@ -291,7 +290,7 @@ with aba2:
         )
 
 
-        ax.boxplot(
+        box = ax.boxplot(
             df["valor"],
             vert=False,
             showmeans=True,
@@ -299,15 +298,20 @@ with aba2:
         )
 
 
+        # cor do box
+        for elemento in box["boxes"]:
+            elemento.set(
+                facecolor="#2ca02c"
+            )
+
+
         ax.set_title(
-            "Diagrama de caixa com média",
-            fontsize=14,
-            fontweight="bold"
+            "Dispersão e valores extremos"
         )
 
 
         ax.set_xlabel(
-            "Valor"
+            "IBCR-PE"
         )
 
 
@@ -321,27 +325,18 @@ with aba2:
 
         st.pyplot(fig)
 
+
+
 # ======================================
 # ABA 3 - SAZONALIDADE
 # ======================================
 
-import streamlit as st
-import pandas as pd
-import matplotlib.pyplot as plt
+with aba3:
 
+    st.subheader(
+        "Comportamento mensal ao longo dos anos"
+    )
 
-def plot_heatmap_temporal(df: pd.DataFrame):
-    """
-    Plota um heatmap (mapa de calor) do valor médio por ano x mês.
-
-    Espera um DataFrame `df` com as colunas:
-        - "data": datetime
-        - "valor": numérico
-    """
-
-    df = df.copy()
-    df["ano"] = df["data"].dt.year
-    df["mes"] = df["data"].dt.month
 
     heatmap_data = pd.pivot_table(
         df,
@@ -351,37 +346,128 @@ def plot_heatmap_temporal(df: pd.DataFrame):
         aggfunc="mean"
     )
 
-    fig, ax = plt.subplots(figsize=(12, 6))
 
-    im = ax.imshow(
+    fig, ax = plt.subplots(
+        figsize=(12,6)
+    )
+
+
+    imagem = ax.imshow(
         heatmap_data,
-        aspect="auto"
+        aspect="auto",
+        cmap="RdYlGn"
     )
 
-    fig.colorbar(im, ax=ax, label="Valor médio")
 
-    ax.set_xticks(range(12))
+    fig.colorbar(
+        imagem,
+        ax=ax,
+        label="Valor médio"
+    )
+
+
+    ax.set_xticks(
+        range(12)
+    )
+
+
     ax.set_xticklabels(
-        ["Jan", "Fev", "Mar", "Abr",
-         "Mai", "Jun", "Jul", "Ago",
-         "Set", "Out", "Nov", "Dez"]
+        [
+            "Jan","Fev","Mar","Abr",
+            "Mai","Jun","Jul","Ago",
+            "Set","Out","Nov","Dez"
+        ]
     )
 
-    ax.set_yticks(range(len(heatmap_data.index)))
-    ax.set_yticklabels(heatmap_data.index)
 
-    ax.set_title("Mapa de calor temporal", fontsize=16, fontweight="bold")
-    ax.set_xlabel("Mês")
-    ax.set_ylabel("Ano")
+    ax.set_yticks(
+        range(len(heatmap_data.index))
+    )
+
+
+    ax.set_yticklabels(
+        heatmap_data.index
+    )
+
+
+    ax.set_xlabel(
+        "Mês"
+    )
+
+
+    ax.set_ylabel(
+        "Ano"
+    )
+
+
+    ax.set_title(
+        "Mapa de calor do IBCR-PE",
+        fontsize=16,
+        fontweight="bold"
+    )
+
 
     fig.tight_layout()
 
-    # No Streamlit, usamos st.pyplot() no lugar de plt.show()
+
     st.pyplot(fig)
 
-    # Efeitos da pandemia aparecem no gráfico
-    st.caption("Efeitos da pandemia aparecem no gráfico.")
 
 
-# No seu app, depois de carregar o df (do link da web), chame:
-# plot_heatmap_temporal(df)
+# ======================================
+# ABA 4 - ANÁLISE ANUAL
+# ======================================
+
+with aba4:
+
+    st.subheader(
+        "Média anual do IBCR-PE"
+    )
+
+
+    media_ano = (
+        df.groupby("ano")["valor"]
+        .mean()
+    )
+
+
+    fig, ax = plt.subplots(
+        figsize=(10,5)
+    )
+
+
+    ax.barh(
+        media_ano.index.astype(str),
+        media_ano.values,
+        color="#9467bd",
+        edgecolor="black"
+    )
+
+
+    ax.set_title(
+        "Valor médio por ano",
+        fontsize=16,
+        fontweight="bold"
+    )
+
+
+    ax.set_xlabel(
+        "Valor médio"
+    )
+
+
+    ax.set_ylabel(
+        "Ano"
+    )
+
+
+    ax.grid(
+        axis="x",
+        alpha=0.3
+    )
+
+
+    fig.tight_layout()
+
+
+    st.pyplot(fig)
