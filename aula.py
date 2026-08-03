@@ -348,10 +348,11 @@ with aba3:
     )
 
 
-    imagem = ax.imshow(
-        heatmap_data,
-        aspect="auto"
-    )
+   imagem = ax.imshow(
+    heatmap_data,
+    aspect="auto",
+    cmap="viridis"
+)
 
 
     fig.colorbar(
