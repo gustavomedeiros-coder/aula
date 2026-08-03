@@ -351,7 +351,7 @@ with aba3:
     imagem = ax.imshow(
         heatmap_data,
         aspect="auto",
-        cmap="viridis
+        cmap="viridis"
     )
 
 
