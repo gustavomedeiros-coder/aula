@@ -25,6 +25,12 @@ def carregar_dados():
         sep=";",
         decimal=","
     )
+
+    df["data"] = pd.to_datetime(
+        df["data"],
+        dayfirst=True
+    )
+
     return df
 
 
