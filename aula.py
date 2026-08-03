@@ -30,6 +30,7 @@ def carregar_dados():
 
 df = carregar_dados()
 
+st.write(df.columns)
 
 # Visualização inicial
 st.subheader("Dados")
