@@ -163,26 +163,26 @@ with aba1:
     )
 
 
+    # Série original
     ax.plot(
         df["data"],
         df["valor"],
-        color="#1f77b4",
-        linewidth=1.8,
-        alpha=0.7,
+        linewidth=1.5,
+        alpha=0.6,
         label="IBCR-PE"
     )
 
 
+    # Média móvel
     ax.plot(
         df["data"],
         df["media_movel"],
-        color="#d62728",
         linewidth=3,
         label="Média móvel (12 meses)"
     )
 
 
-    # Destacar período da pandemia
+    # Destacar pandemia
     ax.axvspan(
         pd.Timestamp("2020-03-01"),
         pd.Timestamp("2021-12-01"),
@@ -193,27 +193,29 @@ with aba1:
 
 
     ax.set_title(
-        "IBCR-PE e tendência de longo prazo",
+        "IBCR-PE e média móvel de 12 meses",
         fontsize=16,
         fontweight="bold"
     )
 
 
     ax.set_xlabel(
-        "Ano"
+        "Data"
     )
+
 
     ax.set_ylabel(
         "Índice"
     )
 
 
-    ax.legend()
-
-
     ax.grid(
+        linestyle="--",
         alpha=0.3
     )
+
+
+    ax.legend()
 
 
     fig.tight_layout()
@@ -237,8 +239,7 @@ with aba2:
     col1, col2 = st.columns(2)
 
 
-    # HISTOGRAMA
-
+    # Histograma
     with col1:
 
         fig, ax = plt.subplots(
@@ -249,18 +250,19 @@ with aba2:
         ax.hist(
             df["valor"],
             bins=30,
-            color="#1f77b4",
             edgecolor="black"
         )
 
 
         ax.set_title(
-            "Distribuição dos valores"
+            "Distribuição dos valores",
+            fontsize=14,
+            fontweight="bold"
         )
 
 
         ax.set_xlabel(
-            "IBCR-PE"
+            "Valor"
         )
 
 
@@ -281,8 +283,7 @@ with aba2:
 
 
 
-    # BOXPLOT
-
+    # Boxplot
     with col2:
 
         fig, ax = plt.subplots(
@@ -290,7 +291,7 @@ with aba2:
         )
 
 
-        box = ax.boxplot(
+        ax.boxplot(
             df["valor"],
             vert=False,
             showmeans=True,
@@ -298,20 +299,15 @@ with aba2:
         )
 
 
-        # cor do box
-        for elemento in box["boxes"]:
-            elemento.set(
-                facecolor="#2ca02c"
-            )
-
-
         ax.set_title(
-            "Dispersão e valores extremos"
+            "Diagrama de caixa com média",
+            fontsize=14,
+            fontweight="bold"
         )
 
 
         ax.set_xlabel(
-            "IBCR-PE"
+            "Valor"
         )
 
 
@@ -334,7 +330,7 @@ with aba2:
 with aba3:
 
     st.subheader(
-        "Comportamento mensal ao longo dos anos"
+        "Mapa de calor temporal"
     )
 
 
@@ -354,8 +350,7 @@ with aba3:
 
     imagem = ax.imshow(
         heatmap_data,
-        aspect="auto",
-        cmap="RdYlGn"
+        aspect="auto"
     )
 
 
@@ -425,10 +420,9 @@ with aba4:
     )
 
 
-    media_ano = (
-        df.groupby("ano")["valor"]
-        .mean()
-    )
+    media_ano = df.groupby(
+        "ano"
+    )["valor"].mean()
 
 
     fig, ax = plt.subplots(
@@ -439,7 +433,6 @@ with aba4:
     ax.barh(
         media_ano.index.astype(str),
         media_ano.values,
-        color="#9467bd",
         edgecolor="black"
     )
 
@@ -463,6 +456,7 @@ with aba4:
 
     ax.grid(
         axis="x",
+        linestyle="--",
         alpha=0.3
     )
 
