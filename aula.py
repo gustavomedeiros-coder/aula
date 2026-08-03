@@ -44,6 +44,7 @@ st.subheader("Dados")
 st.dataframe(df.head())
 
 #a partir daqui são gráficos
+#GRÁFICO 1
 # -------------------------------------
 # Gráfico 1 - Série temporal com média móvel
 # -------------------------------------
@@ -109,6 +110,57 @@ ax.grid(
 
 # Legenda
 ax.legend()
+
+
+# Ajuste
+fig.tight_layout()
+
+
+# Exibir no Streamlit
+st.pyplot(fig)
+
+#GRÁFICO 2
+# -------------------------------------
+# Gráfico 2 - Distribuição dos valores
+# -------------------------------------
+
+st.subheader("Distribuição de Valores")
+
+
+# Criar gráfico
+fig, ax = plt.subplots(figsize=(10, 6))
+
+
+# Histograma
+ax.hist(
+    df["valor"],
+    bins=30,
+    edgecolor="black"
+)
+
+
+# Título
+ax.set_title(
+    "Distribuição de Valores",
+    fontsize=16,
+    fontweight="bold"
+)
+
+
+# Eixos
+ax.set_xlabel(
+    "Valor"
+)
+
+ax.set_ylabel(
+    "Frequência"
+)
+
+
+# Grade
+ax.grid(
+    alpha=0.3
+)
 
 
 # Ajuste
