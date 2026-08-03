@@ -151,3 +151,151 @@ fig.tight_layout()
 
 
 st.pyplot(fig)
+
+#-----------------------------------------
+# Gráfico 3 - boxplot
+#-----------------------------------------
+
+# -------------------------------------
+# Gráfico 3 - Diagrama de caixa com média
+# -------------------------------------
+
+st.subheader("Diagrama de caixa com média")
+
+
+# Criar gráfico
+fig, ax = plt.subplots(
+    figsize=(10, 5)
+)
+
+
+# Boxplot
+ax.boxplot(
+    df["valor"],
+    vert=False,
+    showmeans=True,
+    patch_artist=True
+)
+
+
+# Título
+ax.set_title(
+    "Diagrama de caixa com média",
+    fontsize=16,
+    fontweight="bold"
+)
+
+
+# Eixo
+ax.set_xlabel(
+    "Valor"
+)
+
+
+# Grade
+ax.grid(
+    alpha=0.3
+)
+
+
+# Ajuste
+fig.tight_layout()
+
+
+# Exibir no Streamlit
+st.pyplot(fig)
+
+#----------------------------
+#gráfico 4 - heatmap
+#----------------------------
+
+# -------------------------------------
+# Gráfico 4 - Mapa de calor temporal
+# -------------------------------------
+
+st.subheader("Mapa de calor temporal")
+
+
+# Criar ano e mês
+df["ano"] = df["data"].dt.year
+df["mes"] = df["data"].dt.month
+
+
+# Organizar dados para o heatmap
+heatmap_data = pd.pivot_table(
+    df,
+    values="valor",
+    index="ano",
+    columns="mes",
+    aggfunc="mean"
+)
+
+
+# Criar gráfico
+fig, ax = plt.subplots(
+    figsize=(12, 6)
+)
+
+
+# Mapa de calor
+imagem = ax.imshow(
+    heatmap_data,
+    aspect="auto"
+)
+
+
+# Barra de cores
+fig.colorbar(
+    imagem,
+    ax=ax,
+    label="Valor médio"
+)
+
+
+# Meses
+ax.set_xticks(
+    range(12)
+)
+
+ax.set_xticklabels(
+    [
+        "Jan","Fev","Mar","Abr",
+        "Mai","Jun","Jul","Ago",
+        "Set","Out","Nov","Dez"
+    ]
+)
+
+
+# Anos
+ax.set_yticks(
+    range(len(heatmap_data.index))
+)
+
+ax.set_yticklabels(
+    heatmap_data.index
+)
+
+
+# Título
+ax.set_title(
+    "Mapa de calor temporal",
+    fontsize=16,
+    fontweight="bold"
+)
+
+
+# Eixos
+ax.set_xlabel(
+    "Mês"
+)
+
+ax.set_ylabel(
+    "Ano"
+)
+
+
+fig.tight_layout()
+
+
+# Mostrar no Streamlit
+st.pyplot(fig)
