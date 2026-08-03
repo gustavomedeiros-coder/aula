@@ -36,14 +36,14 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.title("📊 IBCR-PE — Indicador de Atividade Econômica em Pernambuo (com ajuste sazonal)")
+st.title("📊 IBCR-PE — Indicador de Atividade Econômica em Pernambuco (com ajuste sazonal)")
 
 st.markdown(
     """
     Dashboard interativo do **Índice de Atividade Econômica Regional de Pernambuco (IBCR-PE)**.
 
-    O indicador acompanha a evolução da atividade econômica do estado,
-    permitindo observar tendências, ciclos e mudanças estruturais.
+    O indicador acompanha a evolução da atividade econômica do estado, excluindo o efeito
+    da sazonalidade, permitindo observar tendências, ciclos e mudanças estruturais.
     """
 )
 
