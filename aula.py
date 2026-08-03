@@ -104,7 +104,14 @@ data_final = st.sidebar.date_input(
     df["data"].max()
 )
 
+# ======================================
+# FILTRO DE DATAS
+# ======================================
 
+df = df[
+    (df["data"] >= pd.to_datetime(data_inicial)) &
+    (df["data"] <= pd.to_datetime(data_final))
+].copy()
 
 # ======================================
 # TRATAMENTO
