@@ -136,6 +136,13 @@ df["mes"] = df["data"].dt.month
 
 ultimo_valor = df["valor"].iloc[-1]
 
+valor_anterior = df["valor"].iloc[-2]
+
+variacao = (
+    (ultimo_valor - valor_anterior)
+    / valor_anterior
+) * 100
+
 media_historica = df["valor"].mean()
 
 maximo = df["valor"].max()
