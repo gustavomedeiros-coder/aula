@@ -25,6 +25,17 @@ plt.style.use("seaborn-v0_8-whitegrid")
 # CABEÇALHO
 # ======================================
 
+st.markdown(
+    """
+    <style>
+    .block-container {
+        padding-top: 2rem;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 st.title("📊 IBCR-PE — Indicador de Atividade Econômica")
 
 st.markdown(
