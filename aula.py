@@ -67,6 +67,43 @@ def carregar_dados():
 
 df = carregar_dados()
 
+# ======================================
+# BARRA LATERAL
+# ======================================
+
+st.sidebar.title("📊 IBCR-PE")
+
+st.sidebar.markdown(
+    """
+    **Índice de Atividade Econômica Regional
+    de Pernambuco**
+
+    O IBCR-PE acompanha a evolução da
+    atividade econômica do estado, servindo
+    como indicador antecedente do PIB.
+    """
+)
+
+
+st.sidebar.divider()
+
+
+st.sidebar.subheader(
+    "Período de análise"
+)
+
+
+data_inicial = st.sidebar.date_input(
+    "Data inicial",
+    df["data"].min()
+)
+
+
+data_final = st.sidebar.date_input(
+    "Data final",
+    df["data"].max()
+)
+
 
 
 # ======================================
